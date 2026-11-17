@@ -7,6 +7,7 @@ OUT = R + "/2026-11-18-newsdesk-24"
 IMG = base64.b64encode(open(OUT + "/lead.jpg", "rb").read()).decode()
 DATE_L, DATE_S, NO = "Wednesday 18 November 2026", "18 Nov 2026", 24
 TOTAL = 5
+V = {1: "-v2", 4: "-v2"}  # headline fix: two years to six months
 
 def ff(name, path, style="normal", w="100 900"):
     b = base64.b64encode(open(D + path, "rb").read()).decode()
@@ -40,7 +41,7 @@ h1{font-family:Caslon;font-weight:700;font-size:88px;line-height:.98;letter-spac
 .ft{display:flex;justify-content:space-between;border-top:3px solid #111;padding-top:12px;margin-top:22px;font-family:Inter;font-size:15px;font-weight:700;letter-spacing:.16em}
 """
 S2 = ("Tribunals", "Acas may not call you first", "From 26 November, Acas does not have to contact you if it decides settlement is not possible. The claim could be your first warning.")
-S3 = ("Dismissal", "Six weeks to six months", "From 1 January, staff with six months' service can claim unfair dismissal. Make probation decisions well before then.")
+S3 = ("Dismissal", "Two years to six months", "From 1 January, staff with six months' service can claim unfair dismissal. Make probation decisions well before then.")
 LEAD = ("New regulations made on 12 November mean every employer in England, Wales and Scotland must give workers a written statement of their right to join a trade union. "
         "New starters get it with their written terms from 1 January 2027. Existing staff must have it by 5 April 2027, then once a year. "
         "The government has published the form. You cannot add to it or change it.")
@@ -117,7 +118,7 @@ p3 = story(3, "Tribunals", "Acas may not call you first",
  "<h4>Why it matters</h4><p>A grievance that was logged and answered shows you took the concern seriously. One left without a reply will be visible from the start.</p><p>With a six-month time limit, a claim can arrive long after the event.</p>",
  ["Name one person to handle Acas contact.", "Check your phone and email details are current.", "Log and answer every grievance in writing.", "Keep records long enough to defend a late claim."])
 
-p4 = story(4, "Dismissal", "Six weeks to six months",
+p4 = story(4, "Dismissal", "Two years to six months",
  "From 1 January, unfair dismissal rights start after six months' service, not two years.",
  "<p>The Employment Rights Act 2025 cuts the qualifying period for unfair dismissal from two years to six months on 1 January 2027.</p><p>It is not only about new hires. Existing staff with six months' service can claim if dismissed on or after that date.</p><h4>Probation</h4><p>Probation does not stop the clock, and extending it does not either.</p>",
  "Make the probation decision by month five, not month six.", "Our advice",
@@ -138,5 +139,5 @@ with sync_playwright() as p:
     pages = [(front, FCSS)] + [(h, CSS) for h in (p2, p3, p4, p5)]
     for i, (h, css) in enumerate(pages, 1):
         pg.set_content(f"<html><head><style>{FONTS}{css}</style></head><body style='margin:0'>{h}</body></html>"); pg.wait_for_timeout(500)
-        pg.screenshot(path=f"{OUT}/page{i}.png"); print(f"{OUT}/page{i}.png")
+        fn = f"{OUT}/page{i}{V.get(i, '')}.png"; pg.screenshot(path=fn); print(fn)
     br.close()
