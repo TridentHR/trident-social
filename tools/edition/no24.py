@@ -7,7 +7,7 @@ OUT = R + "/2026-11-18-newsdesk-24"
 IMG = base64.b64encode(open(OUT + "/lead.jpg", "rb").read()).decode()
 DATE_L, DATE_S, NO = "Wednesday 18 November 2026", "18 Nov 2026", 24
 TOTAL = 5
-V = {1: "-v2", 4: "-v2"}  # headline fix: two years to six months
+V = {1: "-v2", 4: "-v3"}  # headline fix: two years to six months
 
 def ff(name, path, style="normal", w="100 900"):
     b = base64.b64encode(open(D + path, "rb").read()).decode()
@@ -95,13 +95,13 @@ def head(n):
     return f'<div class="run"><span class="n">{n}</span><span class="m">Trident HR Newsdesk</span><span class="d up">{DATE_S}</span></div><div class="rule2"></div>'
 def foot(n, last=False):
     return f'<div class="ft up"><span>tridenthr.co.uk</span><span>{"Full stories: link in bio" if last else f"Page {n} of {TOTAL}"}</span></div>'
-def story(n, sec, h, deck, c1, pull, src, c2, acts):
+def story(n, sec, h, deck, c1, pull, src, c2, acts, c3=""):
     return f'''<div class="pg">{head(n)}
 <div><span class="sec up">{sec}</span></div>
 <h1>{h}</h1><div class="deck">{deck}</div>
 <div class="body"><div class="col dc">{c1}</div><div class="vr"></div>
 <div class="col"><div class="pull"><q>{pull}</q><span class="up">{src}</span></div>{c2}</div><div class="vr"></div>
-<div class="col"><div class="box"><div class="h up">Do this now</div><ol>{"".join(f"<li>{a}</li>" for a in acts)}</ol></div></div></div>
+<div class="col"><div class="box"><div class="h up">Do this now</div><ol>{"".join(f"<li>{a}</li>" for a in acts)}</ol></div>{c3}</div></div>
 {foot(n)}</div>'''
 
 p2 = story(2, "Trade Unions", "Union rights statement from 1 January",
@@ -120,10 +120,11 @@ p3 = story(3, "Tribunals", "Acas may not call you first",
 
 p4 = story(4, "Dismissal", "Two years to six months",
  "From 1 January, unfair dismissal rights start after six months' service, not two years.",
- "<p>The Employment Rights Act 2025 cuts the qualifying period for unfair dismissal from two years to six months on 1 January 2027.</p><p>It is not only about new hires. Existing staff with six months' service can claim if dismissed on or after that date.</p><h4>Probation</h4><p>Probation does not stop the clock, and extending it does not either.</p>",
+ "<p>The Employment Rights Act 2025 cuts the qualifying period for unfair dismissal from two years to six months on 1 January 2027.</p><p>It is not only about new hires. Existing staff with six months' service can claim if dismissed on or after that date.</p><h4>Probation</h4><p>Probation does not stop the clock, and extending it does not either. Anyone who started by early July 2026 will be past six months on 1 January, whatever their probation status.</p><p>Notice counts too. A week's statutory notice can tip them over.</p>",
  "Make the probation decision by month five, not month six.", "Our advice",
- "<h4>The notice trap</h4><p>Statutory notice can count towards service. Someone dismissed just short of six months may be pushed over the line.</p><h4>Read more</h4><p>Our two-part series on the change is on the Newsdesk.</p>",
- ["List who will have six months' service on 1 January.", "Cap probation at five months.", "Update contracts that still mention two years.", "Brief managers on probation reviews."])
+ "<h4>The notice trap</h4><p>Statutory notice can count towards service. Someone dismissed just short of six months may be pushed over the line.</p><h4>No cap on awards</h4><p>The compensatory award cap also goes on 1 January.</p><h4>Read more</h4><p>Our two-part series on the change is on the Newsdesk.</p>",
+ ["List who will have six months' service on 1 January.", "Cap probation at five months.", "Update contracts that still mention two years.", "Brief managers on probation reviews."],
+ "<h4>What does not change</h4><p>Automatically unfair reasons, such as whistleblowing or pregnancy, still need no qualifying service. Discrimination claims never needed any.</p>")
 
 DIARY = [("26 Nov", "2026", "Tribunals", "Acas early conciliation changes", "Acas may issue a certificate without contacting you. Name who handles Acas contact."),
  ("1 Jan", "2027", "Dismissal", "Six-month qualifying period", "Unfair dismissal rights start after six months' service."),
