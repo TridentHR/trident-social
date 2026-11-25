@@ -136,17 +136,8 @@ def build(g, outdir):
     files.append(("Guide6.dc.html", "Read the full guide", page("Read the full guide", inner, 6, total)))
 
 
-    # Facebook single card
-    qa = "".join(f'<p style="margin: 22px 0 0; font-size: 31px; line-height: 1.45; color: rgba(255,255,255,0.92)">{e(x)}</p>' for x in sentences(g["quick_answer"]))
-    inner = f'''<div style="margin: auto 0; display: flex; flex-direction: column">
-<h1 style="margin: 0; font-family: 'Cinzel TH', serif; font-weight: 400; font-size: 70px; line-height: 1.14; letter-spacing: 1.5px">{keep_hyphens(g["title"])}</h1>
-<div style="margin-top: 52px; background: {PANEL}; border-left: 4px solid {GOLD}; padding: 40px 46px 46px">
-<div style="font-size: 20px; font-weight: 700; letter-spacing: 6px; color: {GOLD}">QUICK ANSWER</div>{qa}
-</div>
-<div style="margin-top: 46px; font-size: 28px; color: {SOFT}">Read the full guide, plus a free checklist</div>
-<div style="margin-top: 12px; font-family: 'Cinzel TH', serif; font-size: 44px; letter-spacing: 1px; color: {GOLD}">tridenthr.co.uk/guides</div>
-</div>'''
-    fbsrc = page(g["title"], inner, 1, 1).replace('<span>tridenthr.co.uk/guides</span><span>1 / 1</span>', '<span></span><span></span>')
+    # Facebook card: the cover without the swipe prompt
+    fbsrc = files[0][2].replace("SWIPE FOR THE QUICK ANSWER", "FREE TO READ · LINK BELOW").replace("<span>1 / 6</span>", "<span></span>")
     files.append(("GuideFB.dc.html", "Facebook card", fbsrc))
     os.makedirs(outdir, exist_ok=True)
     for name, _, src in files:
